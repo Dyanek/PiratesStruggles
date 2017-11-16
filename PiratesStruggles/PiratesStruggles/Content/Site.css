@@ -1,0 +1,77 @@
+﻿@import url(http://fonts.googleapis.com/css?family=UnifrakturMaguntia);
+
+* {
+    color: #3a3220;
+    font-family: Calibri;
+}
+
+body {
+    background-color: #fff4e0;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding: 30px;
+    margin-bottom: 30px;
+    font-size: 21px;
+    font-weight: 200;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.piratesStrugglesLogo {
+    font-family: 'UnifrakturMaguntia';
+}
+
+.navbar-brand {
+    font-size: 3em;
+    font-family: 'UnifrakturMaguntia';
+}
+
+.navbar-inverse {
+    background-color: #ffa64d;
+}
+
+p {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#presentation {
+    text-align: center;
+}
+
+.description h2 {
+    text-align: center;
+}
+
+.description li {
+    list-style: none;
+}
+
+.description li:before {
+    content: "\00BB \0020";
+}
+
+.gameImage {
+    display: block;
+    margin-bottom: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 640px;
+    height: 360px;
+}

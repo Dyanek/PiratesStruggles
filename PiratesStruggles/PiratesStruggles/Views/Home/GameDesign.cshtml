@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Game design";
+}
+
+<div class="description">
+    <h2>Game design</h2>
+
+    <p>
+        <span class="piratesStrugglesLogo">Pirates' struggle</span> is a kind of strategic survival in a pirate universe game.
+        The main concept is simple: you are a capitain of a pirates' ship and you must manage your crew with some given resources, they will affect your members' comportments and actions
+        for the future of the game. The resources can be stuff like weapons, drink and food e.g. if you give too much wine to a member then he will have a high percentage of missed attacks
+        during the next fight.
+    </p>
+
+    <p>
+        I wanted to do more than a managment game so I took a simple idea of fighting against other enemy ships with a turn-based combat system like <i>Pokemon</i>, <i>Final Fantasy</i> or
+        <i>Sid Meier's Civilization VI</i>. With this kind of system, the player can take his time to think about what possibilities he has to win the fights with the less losses possible,
+        the score will be calculated on the number of turns the player survived in a party. The fights will have 2 issues:
+        <ul>
+            <li>Defeat - the game is over, the player can retry a new game to do a better score.</li>
+            <li>Victory - the player is rewarded with resources from his defeated enemy and can continue the game.</li>
+        </ul>
+    </p>
+
+    <p>
+        The parties are supposed to be finite, the player will try to do the best score he can make in a single party.
+        He will feel happy when he defeats the enemies and see the good effects of the given resources, he will be disappointed when he’s too greedy or does mistakes with the resources.
+    </p>
+
+    <p>
+        The game is composed of two kinds of phases:
+        <ul>
+            <li>
+                Management: the player will manage his crew, he distributes (or not) the available resources of the ship to his crew. He decides what actions to do for exemple what direction he
+                has to take. This will be a simple interface with some texts describing the possibilities you can choose.
+            </li>
+            <li>
+                Fight: the player will fight against an enemy ship, the purpose is obviously trying to survive this fight and if it is possible with as little as losses as possible. This will be
+                an interface with texts and animations depending on the chosen actions.
+            </li>
+        </ul>
+        <img class="gameImage" src="~/Assets/Images/Phase1.jpg" alt="Phase 1: actions to do" />
+        <img class="gameImage" src="~/Assets/Images/Phase2.jpg" alt="Phase 2: actions to do" />
+    </p>
+
+    <p>
+        For the first version of the game, only basic features will be available such as: eating, drinking, equipping  basic weapons (swords), simple attacks. Depending on the time it takes to
+        develop the game, many other features will be implemented like an account management, a ranking system, new kinds of weapons (pistols), random events happening to the crew e.g. being
+        caught in a storm...
+
+        <img class="gameImage" src="~/Assets/Images/cover.png" alt="Game artwork" />
+    </p>
+</div>
