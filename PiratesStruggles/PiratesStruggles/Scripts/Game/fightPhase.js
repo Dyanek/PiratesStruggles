@@ -62,11 +62,10 @@ var fightState = {
         CreateTextArea();
 
         selectedEnemyPirate = enemyPirate1;
-        //selectEnemyContours = game.add.graphics(0, 0);
+        selectEnemyContours = game.add.graphics(0, 0);
         CreateInstructions();
 
         actualPirate = myPirate1;
-        actualPirateContours = game.add.graphics(0, 0);
 
         selectEnemyCursor = game.input.keyboard.createCursorKeys();
 
@@ -205,7 +204,6 @@ function UpdateHp() {
 }
 
 function ActualPirateContours() {
-    actualPirateContours.destroy();
     actualPirateContours = game.add.graphics(0, 0);
     if (playerTurn)
         DrawContours(actualPirateContours, actualPirate.sprite.x + 5, actualPirate.sprite.y + 6, 65, 110, 0x0000ff);
