@@ -111,6 +111,7 @@ var fightState = {
                     doingAction = false;
                     pirateSelected = false;
                     playerTurn = false;
+                    actualPirate.hasPlayed = true;
                     UpdateInstructions();
 
                     DetermineTurn(enemyPirate1, enemyPirate2, enemyCaptain);
@@ -136,6 +137,7 @@ var fightState = {
                     doingAction = false;
                     pirateSelected = false;
                     playerTurn = true;
+                    actualPirate.hasPlayed = true;
                     UpdateInstructions();
                 }
             }
