@@ -112,9 +112,13 @@ var fightState = {
                     actualPirate.hasPlayed = true;
                     UpdateInstructions();
 
-                    DetermineTurn(enemyPirate1, enemyPirate2, enemyCaptain);
+                    if (myPirate1.hp + myPirate2.hp + myCaptain.hp > 0 && enemyPirate1.hp + enemyPirate2.hp + enemyCaptain.hp > 0) {
+                        DetermineTurn(enemyPirate1, enemyPirate2, enemyCaptain);
 
-                    Attack();
+                        Attack();
+                    }
+                    else
+                        game.state.start("topDown");
                 }
             }
             else {
