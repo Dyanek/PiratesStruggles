@@ -24,7 +24,6 @@ var blackScreen;
 var whiteScreen;
 
 var selectEnemyContours;
-var actualPirateContours;
 
 var actualPirate;
 var playerTurn = true;
@@ -77,15 +76,14 @@ var fightState = {
     },
 
     update: function () {
-        if (!doingAction) { 
-            DetermineTurn(myPirate1, myPirate2, myCaptain)
-
+        if (!doingAction) {
             if (myPirate1.hp + myPirate2.hp + myCaptain.hp > 0 && enemyPirate1.hp + enemyPirate2.hp + enemyCaptain.hp > 0) {
-                ActualPirateContours();
+                DetermineTurn(myPirate1, myPirate2, myCaptain)
+
                 if (selectEnemyCursor.left.isDown || selectEnemyCursor.right.isDown)
                     SelectEnemyPirate();
 
-                if (pirateSelected) 
+                if (pirateSelected)
                     Attack();
             }
             else
@@ -93,19 +91,19 @@ var fightState = {
         }
         else {
             if (playerTurn) {
-                if (actualPirate.sprite.world.x > 740) {
+                if (actualPirate.sprite.x > 740) {
                     actualPirate.sprite.body.velocity.x = 0;
                     actualPirate.sprite.animations.stop();
                     actualPirate.sprite.frame = 9;
-                    actualPirate.sprite.position.x = 740;
+                    actualPirate.sprite.x = 740;
                     if (!hit)
                         Hit(actualPirate, selectedEnemyPirate);
                 }
-                else if (actualPirate.sprite.world.x < actualPirate.initialXPos) {
+                else if (actualPirate.sprite.x < actualPirate.initialXPos) {
                     actualPirate.sprite.body.velocity.x = 0;
                     actualPirate.sprite.animations.stop();
                     actualPirate.sprite.frame = 9;
-                    actualPirate.sprite.position.x = actualPirate.initialXPos;
+                    actualPirate.sprite.x = actualPirate.initialXPos + 5;
                     selectEnemyContours.destroy();
                     hit = false;
                     doingAction = false;
@@ -120,22 +118,21 @@ var fightState = {
                 }
             }
             else {
-                if (actualPirate.sprite.world.x < 450) {
+                if (actualPirate.sprite.x < 450) {
                     actualPirate.sprite.body.velocity.x = 0;
                     actualPirate.sprite.animations.stop();
                     actualPirate.sprite.frame = 5;
-                    actualPirate.sprite.position.x = 450;
+                    actualPirate.sprite.x = 450;
                     if (!hit)
                         Hit(actualPirate, RandomPirate())
                 }
-                else if (actualPirate.sprite.world.x > actualPirate.initialXPos) {
+                else if (actualPirate.sprite.x > actualPirate.initialXPos) {
                     actualPirate.sprite.body.velocity.x = 0;
                     actualPirate.sprite.animations.stop();
                     actualPirate.sprite.frame = 5;
-                    actualPirate.sprite.position.x = actualPirate.initialXPos;
+                    actualPirate.sprite.x = actualPirate.initialXPos - 5;
                     hit = false;
                     doingAction = false;
-                    pirateSelected = false;
                     playerTurn = true;
                     actualPirate.hasPlayed = true;
                     UpdateInstructions();
@@ -147,8 +144,8 @@ var fightState = {
 
 function Attack() {
     doingAction = true;
-    actualPirateContours.destroy();
-    if (playerTurn) {      
+
+    if (playerTurn) {
         actualPirate.sprite.body.velocity.x = 150;
         actualPirate.sprite.animations.play("right");
     }
@@ -201,42 +198,31 @@ function UpdateHp() {
     if (selectedEnemyPirate.hp <= 0) {
         selectedEnemyPirate.hp = 0;
         selectedEnemyPirate.sprite.destroy();
+        selectedEnemyPirate.hpText.destroy();
     }
+    else
         selectedEnemyPirate.hpText.text = "hp: " + selectedEnemyPirate.hp + "/100";
 }
 
-function ActualPirateContours() {
-    actualPirateContours = game.add.graphics(0, 0);
-    if (playerTurn)
-        DrawContours(actualPirateContours, actualPirate.sprite.x + 5, actualPirate.sprite.y + 6, 65, 110, 0x0000ff);
-    else
-        DrawContours(actualPirateContours, actualPirate.sprite.x + 5, actualPirate.sprite.y + 6, 65, 110, 0xff0000);
-}
-
 function DetermineTurn(pirate1, pirate2, pirate3) {
-    var pirateTurn;
-
     if (!pirate1.hasPlayed && pirate1.hp > 0)
-        pirateTurn = pirate1;
+        actualPirate = pirate1;
     else if (!pirate2.hasPlayed && pirate2.hp > 0)
-        pirateTurn = pirate2;
+        actualPirate = pirate2;
     else if (!pirate3.hasPlayed && pirate3.hp > 0)
-        pirateTurn = pirate3;
+        actualPirate = pirate3;
     else {
         pirate1.hasPlayed = false;
         pirate2.hasPlayed = false;
         pirate3.hasPlayed = false;
 
         if (pirate1.hp > 0)
-            pirateTurn = pirate1;
+            actualPirate = pirate1;
         else if (pirate2.hp > 0)
-            pirateTurn = pirate2;
+            actualPirate = pirate2;
         else
-            pirateTurn = pirate3;
+            actualPirate = pirate3;
     }
-
-    actualPirate = pirateTurn;
-    return pirateTurn;
 }
 
 function UpdateInstructions() {
@@ -272,14 +258,34 @@ function SelectEnemyPirate() {
         arrowAlreadyPressed = true;
         game.time.events.add(Phaser.Timer.SECOND * 0.25, function () { arrowAlreadyPressed = false; }, this);
 
-        if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyPirate1)
-            selectedEnemyPirate = enemyCaptain;
-        else if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyCaptain)
-            selectedEnemyPirate = enemyPirate2;
-        else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyPirate2)
-            selectedEnemyPirate = enemyCaptain;
-        else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyCaptain)
-            selectedEnemyPirate = enemyPirate1;
+        if (enemyPirate1.hp > 0 && enemyCaptain.hp > 0 && enemyPirate2.hp > 0) {
+            if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyPirate1)
+                selectedEnemyPirate = enemyCaptain;
+            else if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyCaptain)
+                selectedEnemyPirate = enemyPirate2;
+            else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyPirate2)
+                selectedEnemyPirate = enemyCaptain;
+            else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyCaptain)
+                selectedEnemyPirate = enemyPirate1;
+        }
+        else if (enemyPirate1.hp > 0 && enemyCaptain.hp > 0) {
+            if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyPirate1)
+                selectedEnemyPirate = enemyCaptain;
+            else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyCaptain)
+                selectedEnemyPirate = enemyPirate1;
+        }
+        else if (enemyPirate1.hp > 0 && enemyPirate2.hp > 0) {
+            if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyPirate1)
+                selectedEnemyPirate = enemyPirate2;
+            else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyPirate2)
+                selectedEnemyPirate = enemyPirate1;
+        }
+        else if (enemyCaptain.hp > 0 && enemyPirate2.hp > 0) {
+            if (selectEnemyCursor.right.isDown && selectedEnemyPirate == enemyCaptain)
+                selectedEnemyPirate = enemyPirate2;
+            else if (selectEnemyCursor.left.isDown && selectedEnemyPirate == enemyPirate2)
+                selectedEnemyPirate = enemyCaptain;
+        }
 
         selectEnemyContours.destroy();
         selectEnemyContours = game.add.graphics(0, 0);
@@ -307,12 +313,12 @@ function DrawContours(graphicsObj, x, y, width, height, color, nameX, nameY, nam
 }
 
 function CreatePirates() {
-    myCaptain = { name: "Captain", hp: 100, hpText: CreateHpText(250, 475), sprite: PlaceCharacter("myCaptain", true, 265, 355), initialXPos: 265, hasPlayed: false };
     myPirate1 = { name: "Pirate 1", hp: 100, hpText: CreateHpText(350, 315), sprite: PlaceCharacter("myPirate1", true, 365, 320), initialXPos: 365, hasPlayed: false };
+    myCaptain = { name: "Captain", hp: 100, hpText: CreateHpText(250, 475), sprite: PlaceCharacter("myCaptain", true, 265, 355), initialXPos: 265, hasPlayed: false };
     myPirate2 = { name: "Pirate 2", hp: 100, hpText: CreateHpText(370, 505), sprite: PlaceCharacter("myPirate2", true, 385, 390), initialXPos: 385, hasPlayed: false };
 
-    enemyCaptain = { name: "Captain", hp: 100, hpText: CreateHpText(940, 475), sprite: PlaceCharacter("enemyCaptain", false, 945, 355), initialXPos: 945, hasPlayed: false };
     enemyPirate1 = { name: "Pirate 1", hp: 100, hpText: CreateHpText(820, 315), sprite: PlaceCharacter("enemyPirate1", false, 825, 320), initialXPos: 825, hasPlayed: false };
+    enemyCaptain = { name: "Captain", hp: 100, hpText: CreateHpText(940, 475), sprite: PlaceCharacter("enemyCaptain", false, 945, 355), initialXPos: 945, hasPlayed: false };
     enemyPirate2 = { name: "Pirate 2", hp: 100, hpText: CreateHpText(860, 505), sprite: PlaceCharacter("enemyPirate2", false, 855, 390), initialXPos: 855, hasPlayed: false };
 
     game.physics.enable([myCaptain.sprite, myPirate1.sprite, myPirate2.sprite, enemyCaptain.sprite, enemyPirate1.sprite, enemyPirate2.sprite], Phaser.Physics.ARCADE);
