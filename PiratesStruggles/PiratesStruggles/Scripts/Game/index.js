@@ -5,4 +5,4 @@ game.state.add("topDown", topDownState);
 game.state.add("fight", fightState);
 game.state.add("gameOver", gameOverState);
 
-game.state.start("gameOver");
+game.state.start("introduction");

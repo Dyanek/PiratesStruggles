@@ -77,7 +77,12 @@ var fightState = {
 
     update: function () {
         if (!doingAction) {
-            if (myPirate1.hp + myPirate2.hp + myCaptain.hp > 0 && enemyPirate1.hp + enemyPirate2.hp + enemyCaptain.hp > 0) {
+            if (myPirate1.hp + myPirate2.hp + myCaptain.hp <= 0)
+                game.state.start("gameOver");
+            else if (enemyPirate1.hp + enemyPirate2.hp + enemyCaptain.hp <= 0)
+                game.state.start("topDown");
+            else {
+
                 DetermineTurn(myPirate1, myPirate2, myCaptain)
 
                 if (selectEnemyCursor.left.isDown || selectEnemyCursor.right.isDown)
@@ -85,9 +90,7 @@ var fightState = {
 
                 if (pirateSelected)
                     Attack();
-            }
-            else
-                game.state.start("topDown");
+            }           
         }
         else {
             if (playerTurn) {
@@ -112,13 +115,15 @@ var fightState = {
                     actualPirate.hasPlayed = true;
                     UpdateInstructions();
 
-                    if (myPirate1.hp + myPirate2.hp + myCaptain.hp > 0 && enemyPirate1.hp + enemyPirate2.hp + enemyCaptain.hp > 0) {
+                    if (myPirate1.hp + myPirate2.hp + myCaptain.hp <= 0)
+                        game.state.start("gameOver");
+                    else if (enemyPirate1.hp + enemyPirate2.hp + enemyCaptain.hp <= 0)
+                        game.state.start("topDown");
+                    else {
                         DetermineTurn(enemyPirate1, enemyPirate2, enemyCaptain);
 
                         Attack();
                     }
-                    else
-                        game.state.start("topDown");
                 }
             }
             else {
@@ -177,9 +182,9 @@ function RandomPirate() {
     if (myPirate1.hp > 0)
         tabOfPotentialVictims.push(myPirate1);
     if (myCaptain.hp > 0)
-        tabOfPotentialVictims.push(myPirate2);
-    if (myPirate2.hp > 0)
         tabOfPotentialVictims.push(myCaptain);
+    if (myPirate2.hp > 0)
+        tabOfPotentialVictims.push(myPirate2);
 
     return tabOfPotentialVictims[Math.floor(Math.random() * tabOfPotentialVictims.length)];
 }
@@ -198,7 +203,7 @@ function AttackFinished() {
 }
 
 function UpdateHp() {
-    selectedEnemyPirate.hp = selectedEnemyPirate.hp - 34;
+    selectedEnemyPirate.hp = selectedEnemyPirate.hp - game.rnd.integerInRange(20, 55);
     if (selectedEnemyPirate.hp <= 0) {
         selectedEnemyPirate.hp = 0;
         selectedEnemyPirate.sprite.destroy();
