@@ -194,6 +194,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Game\fightPhase.js" />
+    <Content Include="Scripts\Game\gameOver.js" />
     <Content Include="Scripts\Game\index.js" />
     <Content Include="Scripts\Game\introduction.js" />
     <Content Include="Scripts\Game\topDownPhase.js" />

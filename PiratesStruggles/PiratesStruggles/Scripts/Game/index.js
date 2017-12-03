@@ -3,5 +3,6 @@
 game.state.add("introduction", introductionState);
 game.state.add("topDown", topDownState);
 game.state.add("fight", fightState);
+game.state.add("gameOver", gameOverState);
 
-game.state.start("introduction");
+game.state.start("gameOver");

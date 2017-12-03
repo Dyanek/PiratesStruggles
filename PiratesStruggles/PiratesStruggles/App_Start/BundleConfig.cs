@@ -32,6 +32,7 @@ namespace PiratesStruggles
                       "~/Scripts/Game/introduction.js",
                       "~/Scripts/Game/topDownPhase.js",
                       "~/Scripts/Game/fightPhase.js",
+                      "~/Scripts/Game/gameOver.js",
                       "~/Scripts/Game/index.js"));
         }
     }
