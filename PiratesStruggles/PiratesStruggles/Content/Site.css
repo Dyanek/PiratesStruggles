@@ -69,9 +69,29 @@ p {
 
 .gameImage {
     display: block;
-    margin-bottom: 1%;
     margin-left: auto;
     margin-right: auto;
     width: 640px;
     height: 360px;
+}
+
+.copyright {
+    font-size: 15px;
+}
+
+.supposedTitle {
+    border-top: 1px solid black;
+}
+
+
+figcaption {
+    text-align: center;
+    font-style: italic;
+    font-size: 15px;
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+#gitHubLink {
+    color: cornflowerblue;
 }

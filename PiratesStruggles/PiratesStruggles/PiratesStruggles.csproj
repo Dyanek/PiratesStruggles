@@ -156,6 +156,8 @@
     <Content Include="Assets\Fonts\carrier_command\carrier_command.xml" />
     <Content Include="Assets\Images\blackScreen.jpg" />
     <Content Include="Assets\Images\cover.png" />
+    <Content Include="Assets\Images\phase1Real.png" />
+    <Content Include="Assets\Images\phase2Real.png" />
     <Content Include="Assets\Images\shipDeck.jpg" />
     <Content Include="Assets\Images\waterBackground.jpg" />
     <Content Include="Assets\Images\whiteScreen.jpg" />
@@ -173,8 +175,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Assets\Images\Phase1.jpg" />
-    <Content Include="Assets\Images\Phase2.jpg" />
+    <Content Include="Assets\Images\phase1Supposed.jpg" />
+    <Content Include="Assets\Images\phase2Supposed.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
