@@ -203,7 +203,7 @@ function AttackFinished() {
 }
 
 function UpdateHp() {
-    selectedEnemyPirate.hp = selectedEnemyPirate.hp - game.rnd.integerInRange(20, 55);
+    selectedEnemyPirate.hp = selectedEnemyPirate.hp - game.rnd.integerInRange(25, 55);
     if (selectedEnemyPirate.hp <= 0) {
         selectedEnemyPirate.hp = 0;
         selectedEnemyPirate.sprite.destroy();

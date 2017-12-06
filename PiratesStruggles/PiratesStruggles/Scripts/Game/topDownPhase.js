@@ -18,18 +18,23 @@ var topDownState = {
         myShip = game.add.sprite(640, 360, "myShip"); 
         myShip.anchor.setTo(0.5, 0.5);
         myShip.scale.set(0.5);
-        myShip.frame = 13;            
+        myShip.frame = 13;
 
         enemyShip = game.add.sprite(400, 400, "enemyShip");
         enemyShip.anchor.setTo(0.5, 0.5);
         enemyShip.frame = 1;
 
+        RandomPositionShip(enemyShip);
+
         game.physics.enable([myShip, enemyShip], Phaser.Physics.ARCADE);
+
+        RandomDirection();
     },
 
     update: function () {
         MyShipZoneChanging();
         MyShipMovements();
+        EnemyShipZoneEdge();
         game.physics.arcade.collide(myShip, enemyShip, CollideMyShipEnemyShip);
     }
 };
@@ -74,16 +79,81 @@ function MyShipMovements() {
 
 function MyShipZoneChanging()
 {
-    if (myShip.world.x < 0)
-        myShip.position.x = 1280;
-    else if (myShip.world.x > 1280)
-        myShip.position.x = 0;
-    else if (myShip.world.y < 0)
-        myShip.position.y = 720;
-    else if (myShip.world.y > 720)
-        myShip.position.y = 0;
+    if (myShip.world.x < 0) {
+        myShip.x = 1280;
+        enemyShip.frame = 1;
+        RandomPositionShip(enemyShip);
+    }
+    else if (myShip.world.x > 1280) {
+        myShip.x = 0;
+        RandomPositionShip(enemyShip);
+    }
+    else if (myShip.world.y < 0) {
+        myShip.y = 720;
+        RandomPositionShip(enemyShip);
+    }
+    else if (myShip.world.y > 720) {
+        myShip.y = 0;
+        RandomPositionShip(enemyShip);
+    }
 }
 
 function CollideMyShipEnemyShip() {
     game.state.start("fight");
+}
+
+function RandomPositionShip(ship) {
+    ship.x = game.rnd.integerInRange(1, 1280);
+    ship.y = game.rnd.integerInRange(1, 720);
+}
+
+function RandomDirection() {
+    var direction = game.rnd.integerInRange(0, 3);
+
+    switch (direction) {
+        case 0:
+            enemyShip.body.velocity.x = -200;
+            enemyShip.body.velocity.y = 0;
+            enemyShip.frame = 5;
+            break;
+
+        case 1:
+            enemyShip.body.velocity.x = 0;
+            enemyShip.body.velocity.y = -200;
+            enemyShip.frame = 13;
+            break;
+
+        case 2:
+            enemyShip.body.velocity.x = 0;
+            enemyShip.body.velocity.y = 200;
+            enemyShip.frame = 1;
+            break;
+
+        case 3:
+            enemyShip.body.velocity.x = 200;
+            enemyShip.body.velocity.y = 0;
+            enemyShip.frame = 9;
+            break;
+    }
+
+    game.time.events.add(Phaser.Timer.SECOND * 2, RandomDirection, this);
+}
+
+function EnemyShipZoneEdge() {
+    if (enemyShip.x < 0) {
+        enemyShip.body.velocity.x = 200;
+        enemyShip.frame = 9;
+    }
+    else if (enemyShip.x > 1280) {
+        enemyShip.body.velocity.x = -200;
+        enemyShip.frame = 5;
+    }
+    else if (enemyShip.y < 0) {
+        enemyShip.body.velocity.y = 200;
+        enemyShip.frame = 1;
+    }
+    else if (enemyShip.y > 720) {
+        enemyShip.body.velocity.y = -200;
+        enemyShip.frame = 13;
+    }
 }
